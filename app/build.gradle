@@ -10,19 +10,65 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            debuggable false
+            jniDebuggable false
+            shrinkResources true
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    flavorDimensions "environment"
+    productFlavors {
+        staging {
+            dimension "environment"
+            buildConfigField 'String', 'FEED_BASE_URL', '"https://dl.dropboxusercontent.com/s/2iodh4vg0eortkl/"'
+        }
+
+        production {
+            dimension "environment"
+            buildConfigField 'String', 'FEED_BASE_URL', '"https://dl.dropboxusercontent.com/s/2iodh4vg0eortkl/"'
         }
     }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    /** Android Framework Components BEGIN **/
     implementation 'androidx.appcompat:appcompat:1.0.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.0-alpha2'
+    implementation 'androidx.cardview:cardview:1.0.0'
+    implementation 'androidx.recyclerview:recyclerview:1.0.0'
+    /** Android Framework Components END **/
+
+    /** Third Party Libraries Components BEGIN **/
+    implementation 'com.squareup.retrofit2:retrofit:2.4.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
+    implementation 'com.github.bumptech.glide:glide:4.8.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
+    /** Third Party Libraries Components END **/
+
+    /** Android Architecture Components BEGIN **/
+    def androidx_version = "2.0.0"
+    implementation "androidx.lifecycle:lifecycle-extensions:$androidx_version"
+    implementation "androidx.lifecycle:lifecycle-runtime:$androidx_version"
+    annotationProcessor "androidx.lifecycle:lifecycle-compiler:$androidx_version"
+    implementation "androidx.lifecycle:lifecycle-common-java8:$androidx_version"
+    implementation "androidx.lifecycle:lifecycle-reactivestreams:$androidx_version"
+    /** Android Architecture Components END **/
+
+    /** Android Test-Suite Components BEGIN **/
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.0-alpha4'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0-alpha4'
+    /** Android Test-Suite Components END **/
 }
