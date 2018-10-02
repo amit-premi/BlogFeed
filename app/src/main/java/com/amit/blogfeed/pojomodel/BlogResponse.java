@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 /**
  * Created by Amit PREMI on 02-Oct-18.
  */
-public class BlogModel {
+public class BlogResponse {
 
     private String title;
 
@@ -29,7 +29,7 @@ public class BlogModel {
     @NonNull
     @Override
     public String toString() {
-        return "BlogModel{" +
+        return "BlogResponse{" +
                 "title='" + title + '\'' +
                 ", blogDetailsList=" + blogDetailsList +
                 '}';
@@ -38,7 +38,7 @@ public class BlogModel {
     /**
      * BlogDetails class
      */
-    class BlogDetails {
+    public class BlogDetails {
         private String title;
         private String description;
         private String imageHref;

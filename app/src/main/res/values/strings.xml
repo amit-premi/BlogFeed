@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">BlogFeed</string>
+
+    <!-- Service Calls BEGIN -->
+    <string name="api_success">Success</string>
+    <string name="api_failure">Something went wrong. Please try again.</string>
+    <string name="api_unexpected_error">Unexpected error occurred</string>
+    <string name="issue_network_connectivity">Please check network connectivity</string>
+    <!-- Service Calls END -->
 </resources>

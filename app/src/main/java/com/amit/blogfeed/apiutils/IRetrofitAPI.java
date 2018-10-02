@@ -1,6 +1,6 @@
 package com.amit.blogfeed.apiutils;
 
-import com.amit.blogfeed.pojomodel.BlogModel;
+import com.amit.blogfeed.pojomodel.BlogResponse;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -11,5 +11,5 @@ import retrofit2.http.GET;
 public interface IRetrofitAPI {
 
     @GET("facts.json")
-    Call<BlogModel> getBlogFeeds();
+    Call<BlogResponse> getBlogFeeds();
 }

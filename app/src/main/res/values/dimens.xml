@@ -1,2 +1,10 @@
 <resources>
+    <dimen name="padding_default">10dp</dimen>
+    <dimen name="margin_10">10dp</dimen>
+
+    <dimen name="card_radius">5dp</dimen>
+    <dimen name="blog_title">18sp</dimen>
+    <dimen name="blog_description">14sp</dimen>
+    <dimen name="blog_image_height">90dp</dimen>
+    <dimen name="blog_image_width">120dp</dimen>
 </resources>
