@@ -5,9 +5,8 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-import androidx.annotation.NonNull;
-
 /**
+ * BlogFeed Data Model for the API response
  * Created by Amit PREMI on 02-Oct-18.
  */
 public class BlogResponse {
@@ -24,15 +23,6 @@ public class BlogResponse {
 
     public List<BlogDetails> getBlogDetailsList() {
         return blogDetailsList;
-    }
-
-    @NonNull
-    @Override
-    public String toString() {
-        return "BlogResponse{" +
-                "title='" + title + '\'' +
-                ", blogDetailsList=" + blogDetailsList +
-                '}';
     }
 
     /**
@@ -53,16 +43,6 @@ public class BlogResponse {
 
         public String getImageHref() {
             return imageHref;
-        }
-
-        @NonNull
-        @Override
-        public String toString() {
-            return "BlogDetails{" +
-                    "title='" + title + '\'' +
-                    ", description='" + description + '\'' +
-                    ", imageHref='" + imageHref + '\'' +
-                    '}';
         }
     }
 }

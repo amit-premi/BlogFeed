@@ -8,6 +8,8 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
+ * Retrofit API Client Class to create/get it's Instance
+ * <p>
  * Created by Amit PREMI on 02-Oct-18.
  */
 public class RetrofitClient {

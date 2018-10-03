@@ -1,4 +1,4 @@
-package com.amit.blogfeed.model;
+package com.amit.blogfeed.apiutils;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
