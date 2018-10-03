@@ -1,10 +1,14 @@
 <resources>
     <string name="app_name">BlogFeed</string>
 
+    <string name="refresh">Refresh</string>
+    <string name="retry">Retry</string>
+    <string name="empty_blog_list">Currently no Blog available. Please check later.</string>
+
     <!-- Service Calls BEGIN -->
     <string name="api_success">Success</string>
     <string name="api_failure">Something went wrong. Please try again.</string>
     <string name="api_unexpected_error">Unexpected error occurred</string>
-    <string name="issue_network_connectivity">Please check network connectivity</string>
+    <string name="network_connectivity_issue">Please check network connectivity</string>
     <!-- Service Calls END -->
 </resources>
