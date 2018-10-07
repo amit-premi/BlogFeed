@@ -20,15 +20,17 @@ public class HomePageViewModel extends ViewModel {
     }
 
     /**
-     * Method call to get the Blog Feed Data Set
+     * Method call through ViewModel to get the Blog Feed Data Set
      *
+     * @param isCallForRefresh
+     * @param isNetworkConnected
      * @return
      */
-    public LiveData<BlogLiveDataSet> getBlogFeedsData(boolean isCallForRefresh) {
+    public LiveData<BlogLiveDataSet> getBlogFeedsData(boolean isCallForRefresh, boolean isNetworkConnected) {
         if (homePageAPIServiceModel == null) return null;
 
         //Trying to use the existing DATA but it can be made more efficient based upon the Requirement by using ROOM database or Other means
-        if (mBlogFeedDataSet == null || isCallForRefresh) {
+        if (mBlogFeedDataSet == null || (isCallForRefresh && isNetworkConnected)) {
             mBlogFeedDataSet = homePageAPIServiceModel.getBlogFeedsAPICall();
         }
         return mBlogFeedDataSet;

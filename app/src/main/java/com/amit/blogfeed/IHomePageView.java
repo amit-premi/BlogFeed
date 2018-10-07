@@ -22,8 +22,9 @@ public interface IHomePageView {
      * Method call to make the API call for getting the Blog Feed Data set from the Server
      *
      * @param isRefreshCall
+     * @param isNetworkConnected
      */
-    void getBlogFeedsAPI(boolean isRefreshCall);
+    void getBlogFeedsAPI(boolean isRefreshCall, boolean isNetworkConnected);
 
     /**
      * Method to update the Adapter UI after the response of the API Call
