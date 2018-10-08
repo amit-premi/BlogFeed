@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.amit.blogfeed.adapter.BlogFeedViewModel;
@@ -32,11 +33,14 @@ public class HomePageActivity extends AppCompatActivity implements IHomePageView
     private SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView recycleViewBlogFeed;
     private LinearLayoutManager layoutManagerRecycler;
+    private TextView tEmptyRecyclerView;
     private RelativeLayout layoutNetworkError;
 
     //Instance variables
     private HomePageViewModel mHomePageViewModel;
     private HomeBlogFeedAdapter mHomeBlogFeedAdapter;
+
+    int counter = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +61,7 @@ public class HomePageActivity extends AppCompatActivity implements IHomePageView
         //SwipeRefresh Layout: it's color changes & Refresh Listener
         swipeRefreshLayout = findViewById(R.id.swipe_refresh_layout);
         swipeRefreshLayout.setColorSchemeColors(getResources().getIntArray(R.array.swipeRefreshColors));
-        swipeRefreshLayout.setDistanceToTriggerSync(30);
+        swipeRefreshLayout.setDistanceToTriggerSync(20);
         swipeRefreshLayout.setSize(SwipeRefreshLayout.DEFAULT);
         swipeRefreshLayout.setOnRefreshListener(() -> {
             //Check for Network Availability & Call for Blog Feed Refresh
@@ -69,14 +73,16 @@ public class HomePageActivity extends AppCompatActivity implements IHomePageView
         layoutManagerRecycler = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
         layoutManagerRecycler.setSmoothScrollbarEnabled(true);
         recycleViewBlogFeed.setLayoutManager(layoutManagerRecycler);
+        tEmptyRecyclerView = findViewById(R.id.t_home_recycle_empty);
+
         //Scroll-Listener on the Recycler View to enable/disable the SwipeRefresh based upon item visibility
         recycleViewBlogFeed.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 //This recycler view position check to enable/disable the SwipeRefresh Layout
-                if (layoutManagerRecycler.findFirstCompletelyVisibleItemPosition() == 0) {
+                if (layoutManagerRecycler.findFirstCompletelyVisibleItemPosition() == 0)
                     swipeRefreshLayout.setEnabled(true);
-                } else
+                else
                     swipeRefreshLayout.setEnabled(false);
             }
         });
@@ -99,9 +105,15 @@ public class HomePageActivity extends AppCompatActivity implements IHomePageView
     public void getBlogFeedsAPI(boolean isRefreshCall, boolean isNetworkConnected) {
         if (mHomePageViewModel == null) return;
 
+        //Show the SwipeRefresh Refresh Animation if not visible. Possible case of first time load or Retry Network
+        if (!swipeRefreshLayout.isRefreshing()) {
+            swipeRefreshLayout.setRefreshing(true);
+        }
+
         //Separation of LiveData & Observer helps to have more control, such as it helps to cancel the api call & UI updates anytime
         LiveData<BlogLiveDataSet> blogLiveData = mHomePageViewModel.getBlogFeedsData(isRefreshCall, isNetworkConnected);
         Observer<BlogLiveDataSet> observerLiveData = blogLiveDataSet -> {
+            //Update the Adapter
             if (blogLiveDataSet != null) {
                 //Update the UI after API response
                 updateBlogAdapterUI(blogLiveDataSet);
@@ -125,8 +137,8 @@ public class HomePageActivity extends AppCompatActivity implements IHomePageView
         if (blogFeedResponse.getBlogResponse() != null && blogFeedResponse.getBlogResponse().getBlogDetailsList() != null) {
 
             //Update the Header Title
-            if (getSupportActionBar() != null && !TextUtils.isEmpty(blogFeedResponse.getBlogResponse().getTitle())) {
-                getSupportActionBar().setTitle(blogFeedResponse.getBlogResponse().getTitle());
+            if (!TextUtils.isEmpty(blogFeedResponse.getBlogResponse().getTitle())) {
+                ((TextView) findViewById(R.id.t_home_title)).setText(blogFeedResponse.getBlogResponse().getTitle());
             }
 
             //Create/Update the BlogFeed Adapter
@@ -138,8 +150,13 @@ public class HomePageActivity extends AppCompatActivity implements IHomePageView
                             getBlogResponse().getBlogDetailsList()));
                     recycleViewBlogFeed.setVisibility(View.VISIBLE);
                     recycleViewBlogFeed.setAdapter(mHomeBlogFeedAdapter);
+
+                    //Hiding the Empty Adapter Text Indicator
+                    if (tEmptyRecyclerView.getVisibility() == View.VISIBLE) {
+                        tEmptyRecyclerView.setVisibility(View.GONE);
+                    }
                 } else {
-                    findViewById(R.id.t_home_recycle_empty).setVisibility(View.VISIBLE);
+                    tEmptyRecyclerView.setVisibility(View.VISIBLE);
                     recycleViewBlogFeed.setVisibility(View.GONE);
                 }
             } else {

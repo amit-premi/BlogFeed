@@ -24,7 +24,7 @@ public class BlogFeedViewModel {
 
     public String title;
     public String description;
-    public final ObservableField<String> imageURL = new ObservableField<>();
+    private final ObservableField<String> imageURL = new ObservableField<>();
 
     public String getTitle() {
         return title;

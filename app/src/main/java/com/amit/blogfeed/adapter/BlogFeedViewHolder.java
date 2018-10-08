@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
  * <p>
  * Created by Amit PREMI on 04-Oct-18.
  */
-public class BlogFeedViewHolder extends RecyclerView.ViewHolder {
+class BlogFeedViewHolder extends RecyclerView.ViewHolder {
 
     private RecycleViewBlogItemBinding mBlogDataBinding;
 
@@ -31,7 +31,7 @@ public class BlogFeedViewHolder extends RecyclerView.ViewHolder {
      *
      * @return
      */
-    public RecycleViewBlogItemBinding getBlogDataBinding() {
+    RecycleViewBlogItemBinding getBlogDataBinding() {
         return mBlogDataBinding;
     }
 }
